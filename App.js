@@ -3,6 +3,7 @@ import { StyleSheet, Text, View, StatusBar, Dimensions, TextInput, Platform } fr
 import { ScrollView } from 'react-native-gesture-handler';
 // import { TextInput } from 'react-native-gesture-handler';
 // import { platform } from 'os';
+import { AppLoading } from "expo";
 import ToDo from './ToDo';
 
 
@@ -13,10 +14,20 @@ export default class App extends React.Component {
 
   state = {
     newToDo: "",
+    loadedToDos: false,
   };
 
+  componentDidMount = () => {
+    this._loadToDos();
+  }
+
+
   render() {
-    const { newToDo } = this.state;
+    const { newToDo, loadedToDos } = this.state;
+    if(!loadedToDos) {
+      return <AppLoading />;
+    }
+
     return (
       <View style={styles.container}>
         <StatusBar barStyle="light-content" />
@@ -44,7 +55,8 @@ export default class App extends React.Component {
       newToDo: text,
     });
   }
-
+  _loadToDos = () => {
+  };
 
 }
 
