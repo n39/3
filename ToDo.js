@@ -19,6 +19,7 @@ export default class ToDo extends Component {
         id: PropTypes.string.isRequired,
         uncompleteToDo: PropTypes.func.isRequired,
         completeToDo: PropTypes.func.isRequired,
+        updateToDo: PropTypes.func.isRequired,
     };
 
     state = {
@@ -106,9 +107,10 @@ export default class ToDo extends Component {
         this.setState({ isEditing: true });
     };
     _finishEditing = () => {
-        this.setState({
-            isEditing: false
-        });
+        const { toDoValue } = this.state;
+        const { id, updateToDo } = this.props;
+        updateToDo(id, toDoValue);
+        this.setState({ isEditing: false });
     };
     _controlInput = (text) => {
         this.setState({ toDoValue: text });
