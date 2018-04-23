@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, Text, View, StatusBar, Dimensions, TextInput, Platform } from 'react-native';
+import { StyleSheet, Text, View, StatusBar, Dimensions, TextInput, Platform, AsyncStorage } from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
 // import { TextInput } from 'react-native-gesture-handler';
 // import { platform } from 'os';
@@ -94,6 +94,7 @@ export default class App extends React.Component {
             ...newToDoObject
           }
         };
+        this._saveToDos(newState.toDos);
         return { ...newState };
       });
     }
@@ -106,6 +107,7 @@ export default class App extends React.Component {
         ...prevState,
         ...toDos,
       }
+      this._saveToDos(newState.toDos);
       return {...newState};
     })
   };
@@ -121,6 +123,7 @@ export default class App extends React.Component {
           }
         }
       };
+      this._saveToDos(newState.toDos);
       return { ...newState };
     });
   };
@@ -133,6 +136,7 @@ export default class App extends React.Component {
           [id]: { ...prevState.toDos[id], isCompleted: true }
         }
       };
+      this._saveToDos(newState.toDos);
       return { ...newState };
     });
   };
@@ -145,9 +149,14 @@ export default class App extends React.Component {
           [id]: { ...prevState.toDos[id], text: text }
         }
       };
+      this._saveToDos(newState.toDos);
       return { ...newState };
     });
   }
+  _saveToDos = (newToDos) => {
+    console.log("ic_data: " + JSON.stringify(newToDos));
+    const saveToDos = AsyncStorage.setItem("toDos", JSON.stringify(newToDos));
+  };
 
 }
 
